@@ -1,9 +1,9 @@
 /*
- * 3pi-poolracer - demo code for the Pololu 3pi Robot
+ * 3pi-pool-racer - demo code for the Pololu 3pi Robot
  *
- * If 2 Sharp distance sensors are installed, this code will allow a
- * 3pi to explore its environment by following objects it finds on its
- * left side.
+ * If 2 Sharp distance sensors ( http://www.pololu.com/catalog/product/136 )
+ * are installed, this code will allow a 3pi to explore its environment by
+ * following objects it finds on its left side.
  *
  * http://www.pololu.com
  * http://forum.pololu.com
@@ -38,32 +38,32 @@ const int display_interval_ms = 100;
 
 void initialize()
 {
-	// Set PC5 to read mode
-	DDRC  &= ~(1<< PC5);
-	PORTC &= ~(1<< PC5);
+        // Set PC5 to read mode
+        DDRC  &= ~(1<< PC5);
+        PORTC &= ~(1<< PC5);
 
-	// Play welcome music and display a message
-	print_from_program_space(welcome_line1);
-	lcd_goto_xy(0,1);
-	print_from_program_space(welcome_line2);
-	play_from_program_space(welcome);
-	delay_ms(1000);
+        // Play welcome music and display a message
+        print_from_program_space(welcome_line1);
+        lcd_goto_xy(0,1);
+        print_from_program_space(welcome_line2);
+        play_from_program_space(welcome);
+        delay_ms(1000);
 
-	clear();
-	print_from_program_space(demo_name_line1);
-	lcd_goto_xy(0,1);
-	print_from_program_space(demo_name_line2);
-	delay_ms(1000);
+        clear();
+        print_from_program_space(demo_name_line1);
+        lcd_goto_xy(0,1);
+        print_from_program_space(demo_name_line2);
+        delay_ms(1000);
 
-    // Display battery voltage and wait for button press
-    while(!button_is_pressed(BUTTON_B))
+        // Display battery voltage and wait for button press
+        while(!button_is_pressed(BUTTON_B))
         {
-            clear();
-			print_long(read_battery_millivolts());
-			print("mV");
-			lcd_goto_xy(0,1);
-			print("Press B");
-			delay_ms(100);
+                clear();
+                print_long(read_battery_millivolts());
+                print("mV");
+                lcd_goto_xy(0,1);
+                print("Press B");
+                delay_ms(100);
         }
 
         // Always wait for the button to be released so that 3pi doesn't
@@ -77,10 +77,10 @@ void initialize()
         while(is_playing());
 }
 
-void back_up() 
+void back_up()
 {
-        if (TIME_TO_DISPLAY) 
-		{
+        if (TIME_TO_DISPLAY)
+        {
                 clear();
                 lcd_goto_xy(0,0);
                 print("Backing");
@@ -107,26 +107,25 @@ void turn_in_place() {
 
 int main()
 {
-    // set up the 3pi
-    initialize();
+        // set up the 3pi
+        initialize();
 
-    int last_proximity    = 0;
-    const int base_speed  = 200;
-    const int set_point   = 100;
+        int last_proximity    = 0;
+        const int base_speed  = 200;
+        const int set_point   = 100;
 
-    // This is the "main loop" - it will run forever.
-    while(1)
+        // This is the "main loop" - it will run forever.
+        while(1)
         {
                 // In case it gets stuck: for 1 second every 15 seconds back up
-                if (get_ms() % 15000 > 14000)
-                {
+                if (get_ms() % 15000 > 14000) {
                         back_up();
                         continue;
                 }
 
+                // If something is directly in front turn to the right in place
                 int front_proximity = analog_read(7);
-                if (front_proximity > 200)
-                {
+                if (front_proximity > 200) {
                         turn_in_place();
                         continue;
                 }
@@ -172,7 +171,5 @@ int main()
 
 // Local Variables: **
 // mode: C **
-// c-basic-offset: 4 **
-// tab-width: 4 **
-// indent-tabs-mode: t **
+// c-set-style: linux **
 // end: **

@@ -134,7 +134,7 @@ int main()
                 int proportional = proximity - set_point;
                 int derivative = proximity - last_proximity;
 
-                // Proportional-Derivative Control Signal
+                // Proportional-Derivative Control
                 int pd = proportional / 3 + derivative * 20;
 
                 int left_set  = base_speed + pd;
